@@ -40,5 +40,19 @@ CUT %>%
     Comuna_name2 =sin_tilde(Comuna_name1)
   )
 
+CUT <- 
+CUT %>% 
+  mutate(
+    Region_name2_simple = case_when(
+      Region_name2 == "Arica y Parinacota"  ~ "Arica",
+      Region_name2 ==  "Metropolitana de Santiago" ~ "Metropolitana",
+      Region_name2 == "Libertador General Bernardo OHiggins" ~ "OHiggins",
+      Region_name2 == "Magallanes y de la Antartica Chilena" ~ "Antartica",
+      Region_name2 == "Aysen del General Carlos Ibanez del Campo" ~ "Aysen",
+      Region_name2 == "La Araucania" ~ "Araucania",
+      TRUE ~ Region_name2
+    )
+  )
+
 
 save(CUT, file = 'Geo_code_Chile.RData')
