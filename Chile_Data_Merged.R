@@ -7,14 +7,14 @@
 ##' ============================================================================
 
 library(pacman)
-p_load(tidyverse,withr)
+p_load(tidyverse,withr,readxl)
 
 
 ## DATA
 load("~/Geo_code_Chile.RData")
 load("~/AreaComuna.RData")
 load("~/Comunas_Fronterizas.RData")
-
+Regiones_orden <- read_excel("~/Downloads/Regiones_orden.xlsx") %>% select(-region_name)
 
 ## PREPARING
 
@@ -42,7 +42,7 @@ mi_comuna <-
 fronteriza$CUT <- mi_comuna
 
 fronteriza <-
-fronteriza %>% 
+  fronteriza %>% 
   select(-c(Comuna,Provincia,Region))
 
 
@@ -51,6 +51,8 @@ fronteriza %>%
 CUT <- left_join(CUT,Area, by = c("Comuna_cod1" = "Comuna"))
 
 CUT <- left_join(CUT,fronteriza, by = c("Comuna_cod1" = "CUT"))
+
+CUT <- left_join(CUT,Regiones_orden, by = c("Region_cod2" = "original"))
 
 
 ## STORING
