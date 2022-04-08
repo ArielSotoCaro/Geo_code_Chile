@@ -25,3 +25,21 @@ CUT %>%
   select(Region_cod1,Region_cod2,Region_name1,Region_name2,Region_name2_simple) %>% 
   distinct()
 ````
+
+
+## Correction
+CUT dataset needs to adjust for some tildes
+```
+CUT <-
+  CUT %>% 
+  mutate(
+    Comuna_name1 = case_when(
+      Comuna_name1 == "Los Angeles" ~ "Los Ángeles",
+      Comuna_name1 == "Los Alamos"  ~ "Los Álamos",
+      Comuna_name1 == "Coihaique"  ~ "Coyhaique",
+      Comuna_name1 == "Aisén"  ~ "Aysén",
+      Comuna_name1 == "Ranquil"  ~ "Ránquil",
+      TRUE ~ Comuna_name1
+    )
+  )
+```
