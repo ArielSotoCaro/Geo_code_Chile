@@ -9,11 +9,21 @@
 
 
 library(pacman)
-p_load(readxl,tidyverse)
+p_load(readxl,tidyverse,withr)
 
 
-pob_est <- read_excel("~/Downloads/estimaciones-y-proyecciones-2002-2035-comuna-y-área-urbana-y-rural15.xlsx")
+pob_est <- read_excel("~/Downloads/estimaciones-y-proyecciones-2002-2035-comuna-y-área-urbana-y-rural.xlsx")
 
+
+mi_comuna <- 
+  with_options(
+    c(scipen = 999), 
+    str_pad(pob_est$Comuna, 5, pad = "0")
+  )
+
+
+pob_est$Comuna <- mi_comuna
+rm(mi_comuna)
 
 pob_est <-
 pob_est %>% 
